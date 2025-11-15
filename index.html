@@ -63,7 +63,7 @@
       border-bottom: 2px solid #60a5fa;
     }
 
-    /* SECTIONS */
+    /* SECTION CONTAINER */
     section {
       max-width: 900px;
       margin: auto;
@@ -87,17 +87,39 @@
       opacity: 1;
     }
 
-    /* Gallery Layout */
+    /* GALLERY GRID */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
     }
 
-    .gallery img, .gallery video {
+    /* PHOTO CARD (Image + Caption) */
+    .photo-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .photo-card img {
       width: 100%;
-      border-radius: 0;
-      box-shadow: 0px 4px 14px rgba(0,0,0,0.15);
+      border-radius: 0; /* SHARP CORNERS */
+      box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
+    }
+
+    .caption {
+      text-align: center;
+      color: #4b5563;
+      font-size: 14px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    /* VIDEO STYLE */
+    .gallery video {
+      width: 100%;
+      border-radius: 0; /* SHARP CORNERS */
+      box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);
     }
 
     footer {
@@ -128,21 +150,53 @@
   <!-- PHOTO SECTION -->
   <section id="photos" class="tab-section">
     <h2>Photo Gallery</h2>
+
     <div class="gallery">
-      <img src="images/ani01.jpg" alt="Photo 1" />
-      <img src="images/ani01.jpg" alt="Photo 2" />
-      <img src="images/ani01.jpg" alt="Photo 3" />
-      <img src="images/ani01.jpg" alt="Photo 4" />
+
+      <div class="photo-card">
+        <img src="images/ani01.jpg" alt="Photo 1" />
+        <div class="caption">
+          A Sister All I Need<br>
+          Imouto nora shikindo ten no ki
+        </div>
+      </div>
+
+      <div class="photo-card">
+        <img src="images/ani01.jpg" alt="Photo 2" />
+        <div class="caption">
+          Example Title Line 1<br>
+          Example Title Line 2
+        </div>
+      </div>
+
+      <div class="photo-card">
+        <img src="images/ani01.jpg" alt="Photo 3" />
+        <div class="caption">
+          Another Title<br>
+          Subtitle here
+        </div>
+      </div>
+
+      <div class="photo-card">
+        <img src="images/ani01.jpg" alt="Photo 4" />
+        <div class="caption">
+          Something Here<br>
+          And here
+        </div>
+      </div>
+
     </div>
   </section>
 
   <!-- VIDEO SECTION -->
   <section id="videos" class="tab-section">
     <h2>Video Gallery</h2>
+
     <div class="gallery">
       <video controls src="videos/video1.mp4"></video>
       <video controls src="videos/video2.mp4"></video>
     </div>
+
   </section>
 
   <!-- CONTACT SECTION -->
@@ -157,7 +211,7 @@
     <p>© 2025 Your Name — All rights reserved</p>
   </footer>
 
-  <!-- TABS SCRIPT -->
+  <!-- TAB SWITCH SCRIPT -->
   <script>
     function switchTab(sectionId) {
       // Hide all sections
@@ -166,21 +220,21 @@
         sec.classList.remove("active-section");
       });
 
-      // Remove active highlight from all tabs
+      // Remove active highlight from tabs
       document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
 
-      // Show selected tab content
+      // Show selected section
       const section = document.getElementById(sectionId);
       section.style.display = "block";
 
       // Add fade-in animation
       setTimeout(() => section.classList.add("active-section"), 20);
 
-      // Activate the correct tab
+      // Highlight the active tab
       document.getElementById("tab-" + sectionId).classList.add("active");
     }
 
-    // Default tab on load
+    // Default tab when page loads
     window.onload = function() {
       switchTab("photos");
     };
