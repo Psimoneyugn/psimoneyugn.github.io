@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Portfolio</title>
+
+  <!-- Modern Font -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -14,6 +16,7 @@
       color: #333;
     }
 
+    /* HEADER */
     header {
       background: #111827;
       color: white;
@@ -30,23 +33,37 @@
       opacity: 0.8;
     }
 
+    /* NAV */
     nav {
       background: #1f2937;
-      padding: 10px 0;
+      padding: 12px 0;
       text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
 
     nav a {
       color: white;
-      margin: 0 15px;
+      margin: 0 18px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      padding-bottom: 4px;
     }
 
     nav a:hover {
       color: #60a5fa;
     }
 
+    /* Active tab underline */
+    nav a.active {
+      color: #60a5fa;
+      border-bottom: 2px solid #60a5fa;
+    }
+
+    /* SECTIONS */
     section {
       max-width: 900px;
       margin: auto;
@@ -56,20 +73,31 @@
     h2 {
       text-align: center;
       margin-bottom: 20px;
-      font-size: 30px;
+      font-size: 28px;
     }
 
-    /* Gallery Grid */
+    /* Smooth fade animation */
+    .tab-section {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: none;
+    }
+
+    .active-section {
+      opacity: 1;
+    }
+
+    /* Gallery Layout */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
+      gap: 20px;
     }
 
     .gallery img, .gallery video {
       width: 100%;
-      border-radius: 10px;
-      box-shadow: 0px 3px 10px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      box-shadow: 0px 4px 14px rgba(0,0,0,0.15);
     }
 
     footer {
@@ -78,6 +106,7 @@
       text-align: center;
       padding: 20px;
       margin-top: 40px;
+      font-size: 13px;
     }
   </style>
 
@@ -89,14 +118,15 @@
     <p>Photographer · Videographer · Creator</p>
   </header>
 
+  <!-- NAV TABS -->
   <nav>
-  <a href="#" onclick="showSection('photos')">Photos</a>
-  <a href="#" onclick="showSection('videos')">Videos</a>
-  <a href="#" onclick="showSection('contact')">Contact</a>
-</nav>
+    <a href="#" id="tab-photos" onclick="switchTab('photos')">Photos</a>
+    <a href="#" id="tab-videos" onclick="switchTab('videos')">Videos</a>
+    <a href="#" id="tab-contact" onclick="switchTab('contact')">Contact</a>
+  </nav>
 
-  <!-- PHOTO GALLERY -->
-  <section id="photos" style="display:none;">
+  <!-- PHOTO SECTION -->
+  <section id="photos" class="tab-section">
     <h2>Photo Gallery</h2>
     <div class="gallery">
       <img src="images/ani01.jpg" alt="Photo 1" />
@@ -106,8 +136,8 @@
     </div>
   </section>
 
-  <!-- VIDEO GALLERY -->
- <section id="videos" style="display:none;">
+  <!-- VIDEO SECTION -->
+  <section id="videos" class="tab-section">
     <h2>Video Gallery</h2>
     <div class="gallery">
       <video controls src="videos/video1.mp4"></video>
@@ -116,30 +146,45 @@
   </section>
 
   <!-- CONTACT SECTION -->
-  <section id="contact" style="display:none;">
+  <section id="contact" class="tab-section">
     <h2>Contact</h2>
-    <p style="text-align:center;">Email: your@email.com</p>
+    <p style="text-align:center; font-size:16px;">
+      Email: <a href="mailto:youremail@example.com">youremail@example.com</a>
+    </p>
   </section>
 
   <footer>
     <p>© 2025 Your Name — All rights reserved</p>
   </footer>
-<script>
-  function showSection(sectionId) {
-    // Hide all sections
-    document.getElementById("photos").style.display = "none";
-    document.getElementById("videos").style.display = "none";
-    document.getElementById("contact").style.display = "none";
 
-    // Show selected section
-    document.getElementById(sectionId).style.display = "block";
-  }
+  <!-- TABS SCRIPT -->
+  <script>
+    function switchTab(sectionId) {
+      // Hide all sections
+      document.querySelectorAll(".tab-section").forEach(sec => {
+        sec.style.display = "none";
+        sec.classList.remove("active-section");
+      });
 
-  // Default show PHOTOS when page loads
-  window.onload = function () {
-    showSection("photos");
-  };
-</script>
+      // Remove active highlight from all tabs
+      document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+
+      // Show selected tab content
+      const section = document.getElementById(sectionId);
+      section.style.display = "block";
+
+      // Add fade-in animation
+      setTimeout(() => section.classList.add("active-section"), 20);
+
+      // Activate the correct tab
+      document.getElementById("tab-" + sectionId).classList.add("active");
+    }
+
+    // Default tab on load
+    window.onload = function() {
+      switchTab("photos");
+    };
+  </script>
 
 </body>
 </html>
